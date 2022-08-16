@@ -22,6 +22,7 @@
     "jquery": "^3.6.0",
     "loadash": "^1.0.0",
     "loaddash": "^0.0.1-security",
-    "string-to-json": "^0.1.0"
+    "string-to-json": "^0.1.0",
+    "url": "^0.11.0"
   }
 }

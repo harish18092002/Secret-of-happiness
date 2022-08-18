@@ -48,30 +48,29 @@ res.end("Your data has been stored successfully")
   if(req.method==="PUT"){
      const path = req.url;
      const parts = path.split('/').slice(1);
-     console.log(parts)
-
-  let newDb = usersDatabase.forEach((element =>{
-    if(element.id===parts){
-      req.on("datas",(datas)=>{
-        element.id = datas;
-        element.name = datas;
-        element.year = datas;
-      });
+     let datas ;
+     let part;
+     req.setEncoding("utf8")
+    
+  req.on("data",(d)=>{
+       datas=d;
+       console.log(datas)
+   
       req.on("end",()=>{
-        usersDatabase.push(newDb)
-        console.log(usersDatabase)
+        usersDatabase.forEach((element) =>{
+          part = parts[0]
+  
+          if (element.id === part){
+
+            element.name = datas.name
+         
+          }
+        })
       })
+    });
       res.end("Your data is updated")
     }
-  }))
-
-
-    
-  
-  
-  }
-  
-});
+ });
 
 server.listen(1080);
 

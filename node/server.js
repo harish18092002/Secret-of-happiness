@@ -21,10 +21,12 @@ const server = http.createServer(function (req, res) {
 req.on("end",()=>{
   usersDatabase.push(userData)
   console.log(userData)
+  console.log(usersDatabase)
+  res.end("Your data has been stored successfully")
 })
   
 
-res.end("Your data has been stored successfully")
+
 
 
   }
@@ -55,20 +57,28 @@ res.end("Your data has been stored successfully")
   req.on("data",(d)=>{
        datas=d;
        console.log(datas)
-   
+      });
       req.on("end",()=>{
+        console.log(usersDatabase)
         usersDatabase.forEach((element) =>{
           part = parts[0]
+          console.log( part,typeof part)
+          console.log(element.id,typeof element.id)
+          
   
           if (element.id === part){
-
+console.log("hi")
             element.name = datas.name
-         
-          }
+
+           }
+      
         })
-      })
-    });
-      res.end("Your data is updated")
+      
+        res.end("Your data is updated")
+      }
+      )
+     
+    
     }
  });
 

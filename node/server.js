@@ -11,38 +11,24 @@ const server = http.createServer(function (req, res) {
   if(req.method === "POST" && req.url === "/create-user" ){
     req.setEncoding("utf8");
    req.on("data",(data)=>{
+    data = JSON.parse(data)
   userData = data;
-  // console.log(userData)
 });
 req.on("end",()=>{
 
 (usersDatabase.push(userData))
 
-
-
-
-
-
-
- console.log(usersDatabase,typeof usersDatabase)
-//  console.log(userData)
-  
-  res.end("Your data has been stored successfully")
+console.log(usersDatabase)
+   res.end("Your data has been stored successfully")
 })
-  
-
-
-
-
-  }
+   }
 
 
 // Get method to find and display users
 
   if(req.method==="GET" && req.url==="/find-user"){
-    
     usersDatabase.forEach((item,index)=>{
- 
+ item = JSON.stringify(item)
       if(index===usersDatabase.length-1)
       res.write(item);
       else res.write(item + ",");
@@ -64,36 +50,24 @@ req.on("end",()=>{
      req.setEncoding("utf8")
     
   req.on("data",(d)=>{
+    d = JSON.parse(d)
      datas = d
-   });
+ });
     req.on("end",()=>{
-  
-        usersDatabase.forEach(() =>{
-          part = parts[0]
-           datas= JSON.parse(datas)
-        usersDatabase =  JSON.parse(usersDatabase)
-     if (usersDatabase.id == part){
-              usersDatabase.name = datas.name
-              usersDatabase.year = datas.year
+      part = parts[0]
+        usersDatabase.forEach((element) =>{
+     if (element.id == part){
+           element.name = datas.name
+             element.year = datas.year
               console.log(usersDatabase)
+              console.log(element)
 
-              // Here converting object to array
-
-              // let entries = Object.entries(usersDatabase)
-              // console.log(entries,typeof entries)
-              // entries = JSON.stringify(entries)
-              // usersDatabase.push(entries)
-//  usersDatabase = [usersDatabase]
-              // console.log(usersDatabase)
-            //  usersDatabase =  JSON.stringify(usersDatabase)
-            //  console.log(usersDatabase)
+     console.log("The updated data is", usersDatabase)
            }
        
         }
         )
-
-    
-        res.end("Your data is updated")
+  res.end("Your data is updated")
       }
       )
      

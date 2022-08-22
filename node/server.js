@@ -16,7 +16,7 @@ const server = http.createServer(function (req, res) {
 });
 req.on("end",()=>{
 
-(usersDatabase.push(JSON.parse(userData)))
+(usersDatabase.push(userData))
 
 
 
@@ -24,7 +24,7 @@ req.on("end",()=>{
 
 
 
- console.log(usersDatabase, typeof usersDatabase)
+ console.log(usersDatabase,typeof usersDatabase)
 //  console.log(userData)
   
   res.end("Your data has been stored successfully")
@@ -40,11 +40,14 @@ req.on("end",()=>{
 // Get method to find and display users
 
   if(req.method==="GET" && req.url==="/find-user"){
- usersDatabase.forEach((item,index)=>{
+    
+    usersDatabase.forEach((item,index)=>{
+ 
       if(index===usersDatabase.length-1)
       res.write(item);
       else res.write(item + ",");
           });
+          console.log("Datas has been sent to users")
            res.end();
   }
 
@@ -61,25 +64,35 @@ req.on("end",()=>{
      req.setEncoding("utf8")
     
   req.on("data",(d)=>{
-       datas=d;
-       console.log(datas)
-      });
-      req.on("end",()=>{
-        console.log(usersDatabase)
-        usersDatabase.forEach((element) =>{
-          part = parts[0]
-          console.log( part,typeof part)
-          console.log(element.id,typeof element.id)
-          
+     datas = d
+   });
+    req.on("end",()=>{
   
-          if (element.id == part){
-console.log("hi")
-            element.name = datas.name
+        usersDatabase.forEach(() =>{
+          part = parts[0]
+           datas= JSON.parse(datas)
+        usersDatabase =  JSON.parse(usersDatabase)
+     if (usersDatabase.id == part){
+              usersDatabase.name = datas.name
+              usersDatabase.year = datas.year
+              console.log(usersDatabase)
 
+              // Here converting object to array
+
+              // let entries = Object.entries(usersDatabase)
+              // console.log(entries,typeof entries)
+              // entries = JSON.stringify(entries)
+              // usersDatabase.push(entries)
+//  usersDatabase = [usersDatabase]
+              // console.log(usersDatabase)
+            //  usersDatabase =  JSON.stringify(usersDatabase)
+            //  console.log(usersDatabase)
            }
-      
-        })
-      
+       
+        }
+        )
+
+    
         res.end("Your data is updated")
       }
       )
